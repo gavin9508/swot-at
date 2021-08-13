@@ -13,13 +13,11 @@ public class HttpTest {
         String url = "https://tcc.taobao.com/cc/json/mobile_tel_segment.htm?tel=17600055066";
         HttpClient httpclient = HttpClientBuilder.create().build();
         HttpGet http = new HttpGet(url);
-
         HttpResponse response = null;
         try {
             response = httpclient.execute(http);
             HttpEntity entity = response.getEntity();
             if (entity != null) {
-
                 //getResponse
                 InputStream in = entity.getContent();
                 byte[] data = transformInputstream(in);

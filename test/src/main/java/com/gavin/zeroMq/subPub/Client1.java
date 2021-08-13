@@ -1,4 +1,4 @@
-package com.gavin.zeroMq;
+package com.gavin.zeroMq.subPub;
 
 import org.zeromq.SocketType;
 import org.zeromq.ZContext;
@@ -13,14 +13,17 @@ import org.zeromq.ZMQ;
 public class Client1 {
     public static void main(String args[]){
         try(ZContext context= new ZContext()) {
-            ZMQ.Socket subscriber = context.createSocket(SocketType.SUB); //subscribe类型
+            //创建一个 socket  publish类型
+            ZMQ.Socket subscriber = context.createSocket(SocketType.SUB);
             subscriber.connect("tcp://localhost:10000");
             subscriber.connect("tcp://localhost:10001");
-            subscriber.subscribe("Time".getBytes()); //只订阅Time: 开头的信息
+            //只订阅Time: 开头的信息
+            subscriber.subscribe("Time".getBytes());
 
             for (int i = 0; i < 1000; i++) {
                 Thread.sleep(1000);
-                System.out.println(subscriber.recvStr()); //recvStr直接返回String，内部调用了recv，将byte数组转化为String
+                //recvStr直接返回String，内部调用了recv，将byte数组转化为String
+                System.out.println(subscriber.recvStr());
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
